@@ -1,0 +1,3 @@
+Solved parts 1 & 2
+
+Part 1 was solved with a flood fill algorithm. I tried a few different variants of flood fill to solve part 2, e.g. subtracting the space around the boundary from the overall area, but they were all too slow. Eventually I learned online about the shoelace method for determining the area within a boundary, and Pick's theorem for calculating the number of coordinate points within a boundary, and combined them.

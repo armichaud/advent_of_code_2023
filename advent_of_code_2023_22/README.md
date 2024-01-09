@@ -1,0 +1,1 @@
+I don't really know how to represent three dimensional objects in a reasonable way, so I just didn't bother with it. I'm guessing 3d matrices would be helpful here.
