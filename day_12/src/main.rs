@@ -11,7 +11,7 @@ struct Record {
     damaged_spring_groupings: Vec<usize>,
 }
 
-fn parse_input(filename: &str) -> Vec<Record> {
+fn parse_input(filename: &str, n: usize) -> Vec<Record> {
     let file = File::open(filename).unwrap();
     BufReader::new(file).lines().map(|l| {
         let line = l.unwrap();
@@ -39,9 +39,9 @@ fn parse_input(filename: &str) -> Vec<Record> {
             springs.push(current_group);
         }
         Record {
-            full_record,
-            springs,
-            damaged_spring_groupings,
+            full_record: full_record.repeat(n),
+            springs: springs.iter().cloned().cycle().take(springs.len() * n).collect(),
+            damaged_spring_groupings: damaged_spring_groupings.iter().cloned().cycle().take(damaged_spring_groupings.len() * n).collect(),
         }
     }).collect::<Vec<Record>>()
 }
@@ -112,14 +112,16 @@ fn get_arrangements(working_arrangement: String, record: &Record, memo: &mut Has
     arrangements
 }
 
-fn solution(filename: &str) -> usize {
-    let records = parse_input(filename);
+fn solution(filename: &str, n: usize) -> usize {
+    let records = parse_input(filename, n);
     let mut m = HashMap::new();
     m.insert(1, vec![OPERATIONAL.to_string(), DAMAGED.to_string()]);
     records.iter().map(|r| get_arrangements(String::new(), r, &mut m)).sum()
 }
 
 fn main() {
-    println!("{}", solution("example.txt"));
-    println!("{}", solution("input.txt"));
+    println!("{}", solution("example.txt", 1));
+    println!("{}", solution("input.txt", 1));
+    println!("{}", solution("example.txt", 5));
+    println!("{}", solution("input.txt", 5));
 }
